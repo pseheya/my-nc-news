@@ -1,6 +1,17 @@
-import { Button, Card, Flex, Grid, Image, Text } from "@chakra-ui/react";
+import { Button, Card, Image, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import ReadMore from "./ReadMore";
+import { useState } from "react";
 
 export default function ArticleCard({ article }) {
+  const [showDetails, setShowDetails] = useState(false);
+  const navigate = useNavigate();
+
+  const handleToggleDetails = () => {
+    navigate(`/api/articles/${article.article_id}`);
+  };
+
   return (
     <Card.Root overflow="hidden" maxW="sm" borderWidth="1px" borderRadius="lg">
       <Image src={article.article_img_url} alt={article.title} />
@@ -11,14 +22,14 @@ export default function ArticleCard({ article }) {
           Author: {article.author}
         </Text>
         <Text>Topic: {article.topic}</Text>
-        <Text>Posted: {article.created_at}</Text>
-        <Text>Comments: {article.comment_count}</Text>
-        <Text>Votes: {article.votes}</Text>
       </Card.Body>
+
       <Card.Footer gap="2">
-        <Button variant="solid" background="grey">
-          Add votes
+        <Button onClick={handleToggleDetails} background="gray">
+          {showDetails ? "Hide Information" : "Read More"}
         </Button>
+
+        {showDetails && <ReadMore setShowDetails={setShowDetails} />}
       </Card.Footer>
     </Card.Root>
   );
