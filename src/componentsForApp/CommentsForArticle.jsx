@@ -56,6 +56,7 @@ export default function CommentsForArticle() {
       borderRadius="lg"
       bg="gray.50"
       minHeight="400px"
+      width="100%"
     >
       <Box p="2" borderBottom="1px solid lightgray">
         <Button
@@ -69,6 +70,7 @@ export default function CommentsForArticle() {
           <LeaveCommentForArticle
             article_id={article_id}
             setAddClick={setAddClick}
+            setCurrentPage={setCurrentPage}
           />
         )}
       </Box>
@@ -89,7 +91,17 @@ export default function CommentsForArticle() {
           </Box>
         ))
       ) : (
-        <Text>No comments available for this article.</Text>
+        <Box
+          mt="4"
+          p="4"
+          borderWidth="1px"
+          borderRadius="lg"
+          bg="gray.50"
+          minHeight="400px"
+          minWidth="300px"
+        >
+          <Text>No comments available for this article.</Text>
+        </Box>
       )}
 
       <Box display="flex" justifyContent="center" mt="4">

@@ -8,6 +8,7 @@ export default function LeaveCommentForArticle({
   article_id,
   setAddClick,
   setComments,
+  setCurrentPage,
 }) {
   const [message, setMessage] = useState("");
   const [submitted, setSubmited] = useState("");
@@ -22,6 +23,7 @@ export default function LeaveCommentForArticle({
       ...prevComment,
       [name]: value,
     }));
+    setCurrentPage(1);
   };
 
   const postComment = () => {
