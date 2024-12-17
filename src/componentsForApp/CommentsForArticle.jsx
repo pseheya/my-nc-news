@@ -69,7 +69,6 @@ export default function CommentsForArticle() {
           <LeaveCommentForArticle
             article_id={article_id}
             setAddClick={setAddClick}
-            setCommentsUpdated={setCommentsUpdated}
           />
         )}
       </Box>
