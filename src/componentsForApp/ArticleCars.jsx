@@ -5,7 +5,6 @@ import ReadMore from "./ReadMore";
 import { useState } from "react";
 
 export default function ArticleCard({ article }) {
-  const [showDetails, setShowDetails] = useState(false);
   const navigate = useNavigate();
 
   const handleToggleDetails = () => {
@@ -32,10 +31,8 @@ export default function ArticleCard({ article }) {
 
       <Card.Footer gap="2">
         <Button onClick={handleToggleDetails} background="gray">
-          {showDetails ? "" : "Read More"}
+          Read More
         </Button>
-
-        {showDetails && <ReadMore setShowDetails={setShowDetails} />}
       </Card.Footer>
     </Card.Root>
   );
