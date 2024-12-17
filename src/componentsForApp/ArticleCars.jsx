@@ -9,11 +9,17 @@ export default function ArticleCard({ article }) {
   const navigate = useNavigate();
 
   const handleToggleDetails = () => {
-    navigate(`/api/articles/${article.article_id}`);
+    navigate(`/articles/${article.article_id}`);
   };
 
   return (
-    <Card.Root overflow="hidden" maxW="sm" borderWidth="1px" borderRadius="lg">
+    <Card.Root
+      overflow="hidden"
+      maxW="sm"
+      borderWidth="1px"
+      borderRadius="lg"
+      flexGrow={1}
+    >
       <Image src={article.article_img_url} alt={article.title} />
       <Card.Body gap="2">
         <Card.Title>{article.title}</Card.Title>
@@ -26,7 +32,7 @@ export default function ArticleCard({ article }) {
 
       <Card.Footer gap="2">
         <Button onClick={handleToggleDetails} background="gray">
-          {showDetails ? "Hide Information" : "Read More"}
+          {showDetails ? "" : "Read More"}
         </Button>
 
         {showDetails && <ReadMore setShowDetails={setShowDetails} />}

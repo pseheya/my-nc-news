@@ -1,7 +1,8 @@
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
-import FetchAllArticles from "../fetchingData/fetchArticles";
+import { Box, Flex, Text } from "@chakra-ui/react";
+
 import { useEffect, useState } from "react";
 import ArticleCard from "./ArticleCars";
+import apiFunctions from "../fetchingData/fetchData";
 
 export default function ArticleList() {
   const [articles, setArticles] = useState([]);
@@ -9,7 +10,8 @@ export default function ArticleList() {
 
   useEffect(() => {
     setLoading(true);
-    FetchAllArticles()
+    apiFunctions
+      .getAllArticles()
       .then((data) => {
         setArticles(data.articles);
       })
@@ -30,9 +32,7 @@ export default function ArticleList() {
     <Flex wrap="wrap" gap={6} justify="center">
       {articles.map((article) => {
         return (
-          <Box key={article.created_at}>
-            <ArticleCard article={article}></ArticleCard>
-          </Box>
+          <ArticleCard article={article} key={article.created_at}></ArticleCard>
         );
       })}
     </Flex>
