@@ -1,26 +1,30 @@
 import { useEffect, useState } from "react";
-import fetchArticleById from "../fetchingData/fetchArticleById";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
-import { Button, Card, Image, Text } from "@chakra-ui/react";
+import { Button, Card, Image, Text, Flex, PopoverRoot } from "@chakra-ui/react";
+import apiFunction from "../fetchingData/fetchData";
+import CommentsForArticle from "./CommentsForArticle";
 
 export default function ReadMore() {
   const navigate = useNavigate();
   const { article_id } = useParams();
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   const [article, setArticle] = useState(null);
+  const [showComments, setShowComments] = useState(false);
 
   function handleBack() {
-    navigate("/api/articles");
+    navigate("/articles");
+  }
+
+  function handleComments() {
+    setShowComments(!showComments);
   }
 
   useEffect(() => {
-    if (!article_id) return;
-
     setLoading(true);
 
-    fetchArticleById(article_id)
+    apiFunction
+      .getArticleById(article_id)
       .then((data) => {
         if (data && data.article) {
           setArticle(data.article);
@@ -38,6 +42,10 @@ export default function ReadMore() {
     return <Text>Loading...</Text>;
   }
 
+  if (!article && !isLoading) {
+    return null;
+  }
+
   return (
     <Card.Root maxW="xl" overflow="hidden">
       <Image src={article.article_img_url} alt={article.title} />
@@ -48,17 +56,22 @@ export default function ReadMore() {
           Author: {article.author}
         </Text>
         <Text>Topic: {article.topic}</Text>
-        <Text>Posted: {article.created_at}</Text>
+        <Text>Posted: {new Date(article.created_at).toLocaleString()}</Text>
         <Text>Comments: {article.comment_count}</Text>
         <Text>Votes: {article.votes}</Text>
       </Card.Body>
       <Card.Footer gap="2">
-        <Button variant="solid" background="grey">
-          Vote for this article
-        </Button>
-        <Button variant="ghost" background="grey" onClick={handleBack}>
-          Go back to main page
-        </Button>
+        <Flex mt="3" gap="1" flexWrap="wrap">
+          <Button background="gray">Vote</Button>
+          <Button variant="ghost" background="gray" onClick={handleBack}>
+            Main page
+          </Button>
+
+          <Button variant="ghost" background="gray" onClick={handleComments}>
+            {showComments ? "Hide comments" : "Comments"}
+          </Button>
+          {showComments && <CommentsForArticle />}
+        </Flex>
       </Card.Footer>
     </Card.Root>
   );
