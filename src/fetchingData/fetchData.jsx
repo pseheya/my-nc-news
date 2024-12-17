@@ -4,8 +4,8 @@ const api = axios.create({
   baseURL: "https://my-nc-news-backend-project.onrender.com/api",
 });
 
-async function getAllArticles() {
-  const response = await api.get("/articles");
+async function getAllArticles(page, limit) {
+  const response = await api.get(`/articles?limit=${limit}&p=${page}`);
   return response.data;
 }
 
