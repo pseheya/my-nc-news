@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, Image, Text, Flex, PopoverRoot } from "@chakra-ui/react";
+import { Button, Card, Image, Text, Flex, Box } from "@chakra-ui/react";
 import apiFunction from "../fetchingData/fetchData";
 import CommentsForArticle from "./CommentsForArticle";
+import apiPostFunction from "../fetchingData/postData";
 
 export default function ReadMore() {
   const navigate = useNavigate();
@@ -11,6 +12,8 @@ export default function ReadMore() {
   const [isLoading, setLoading] = useState(false);
   const [article, setArticle] = useState(null);
   const [showComments, setShowComments] = useState(false);
+  const [optimisticVotes, setOptimisticVotes] = useState(0);
+  const [error, setError] = useState("");
 
   function handleBack() {
     navigate("/articles");
@@ -28,22 +31,53 @@ export default function ReadMore() {
       .then((data) => {
         if (data && data.article) {
           setArticle(data.article);
+          setOptimisticVotes(data.article.votes);
         }
       })
       .catch((error) => {
-        console.error("Error fetching article:", error);
+        setError(error);
       })
       .finally(() => {
         setLoading(false);
       });
   }, [article_id]);
 
+  function handleVote(change) {
+    setOptimisticVotes((prevVotes) => {
+      return prevVotes + change;
+    });
+
+    apiPostFunction
+      .postVotes(change, article.article_id)
+      .then(() => {
+        return apiFunction.getArticleById(article_id);
+      })
+      .then((data) => {
+        setArticle(data.article);
+        setOptimisticVotes(data.article.votes);
+      })
+      .catch((err) => {
+        setError(err);
+        setOptimisticVotes((prevVotes) => {
+          return prevVotes - change;
+        });
+      });
+  }
+
   if (isLoading) {
     return <Text>Loading...</Text>;
   }
 
   if (!article && !isLoading) {
-    return null;
+    return (
+      <Box>
+        <Text>This article does not exist</Text>
+      </Box>
+    );
+  }
+
+  if (error) {
+    return <Text>Error: {error}</Text>;
   }
 
   return (
@@ -58,11 +92,26 @@ export default function ReadMore() {
         <Text>Topic: {article.topic}</Text>
         <Text>Posted: {new Date(article.created_at).toLocaleString()}</Text>
         <Text>Comments: {article.comment_count}</Text>
-        <Text>Votes: {article.votes}</Text>
+        <Text>Votes: {optimisticVotes}</Text>
       </Card.Body>
       <Card.Footer gap="2">
         <Flex mt="3" gap="1" flexWrap="wrap">
-          <Button background="gray">Vote</Button>
+          <Button
+            background="gray"
+            onClick={() => {
+              handleVote(1);
+            }}
+          >
+            Like article
+          </Button>
+          <Button
+            background="gray"
+            onClick={() => {
+              handleVote(-1);
+            }}
+          >
+            Dislike article
+          </Button>
           <Button variant="ghost" background="gray" onClick={handleBack}>
             Main page
           </Button>

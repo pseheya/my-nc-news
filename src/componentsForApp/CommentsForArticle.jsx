@@ -2,23 +2,19 @@ import { useEffect } from "react";
 import apiFunctions from "../fetchingData/fetchData";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 
 export default function CommentsForArticle() {
   const { article_id } = useParams();
   const [comments, setComments] = useState(null);
   const [isLoading, setLoading] = useState(false);
+  const [addComment, setAddComment] = useState(false);
 
   useEffect(() => {
-    if (comments) {
-      return;
-    }
-
     setLoading(true);
     apiFunctions
       .getCommentsByArticleId(article_id)
       .then((data) => {
-        console.log(data);
         if (data && data.comment) {
           setComments(data.comment);
         }
@@ -38,6 +34,12 @@ export default function CommentsForArticle() {
   if (comments) {
     return (
       <Box mt="4" p="4" borderWidth="1px" borderRadius="lg" bg="gray.50">
+        <Box p="2" borderBottom="1px solid lightgray">
+          <Button bg="grey" borderBottom="1px solid lightgray">
+            Add Comment
+          </Button>
+        </Box>
+
         {comments.map((comment) => (
           <Box
             key={comment.comment_id}
@@ -52,6 +54,15 @@ export default function CommentsForArticle() {
             <Text>Votes: {comment.votes}</Text>
           </Box>
         ))}
+      </Box>
+    );
+  } else {
+    return (
+      <Box>
+        <Box p="2" borderBottom="1px solid lightgray">
+          <Button bg="grey">Add Comment</Button>
+        </Box>
+        <Text>No comments for this article</Text>
       </Box>
     );
   }
