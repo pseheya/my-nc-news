@@ -14,6 +14,7 @@ export default function ReadMore() {
   const [showComments, setShowComments] = useState(false);
   const [optimisticVotes, setOptimisticVotes] = useState(0);
   const [error, setError] = useState("");
+  const [hasVoted, setHasVoted] = useState(false);
 
   function handleBack() {
     navigate("/articles");
@@ -48,13 +49,14 @@ export default function ReadMore() {
     });
 
     apiPostFunction
-      .postVotes(change, article.article_id)
+      .patchVotes(change, article.article_id)
       .then(() => {
         return apiFunction.getArticleById(article_id);
       })
       .then((data) => {
         setArticle(data.article);
         setOptimisticVotes(data.article.votes);
+        setHasVoted(true);
       })
       .catch((err) => {
         setError(err);
@@ -96,22 +98,27 @@ export default function ReadMore() {
       </Card.Body>
       <Card.Footer gap="2">
         <Flex mt="3" gap="1" flexWrap="wrap">
-          <Button
-            background="gray"
-            onClick={() => {
-              handleVote(1);
-            }}
-          >
-            Like article
-          </Button>
-          <Button
-            background="gray"
-            onClick={() => {
-              handleVote(-1);
-            }}
-          >
-            Dislike article
-          </Button>
+          {!hasVoted && (
+            <>
+              <Button
+                background="gray"
+                onClick={() => {
+                  handleVote(1);
+                }}
+              >
+                Like article ❤️
+              </Button>
+              <Button
+                background="gray"
+                onClick={() => {
+                  handleVote(-1);
+                }}
+              >
+                Dislike article 💔
+              </Button>
+            </>
+          )}
+
           <Button variant="ghost" background="gray" onClick={handleBack}>
             Main page
           </Button>

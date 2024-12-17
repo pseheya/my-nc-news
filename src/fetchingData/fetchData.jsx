@@ -14,11 +14,12 @@ async function getArticleById(id) {
   return response.data;
 }
 
-async function getCommentsByArticleId(id) {
-  const response = await api.get(`/articles/${id}/comments`);
+async function getCommentsByArticleId(id, page, limit) {
+  const response = await api.get(
+    `/articles/${id}/comments?limit=${limit}&p=${page}`
+  );
   return response.data;
 }
-
 export default {
   getAllArticles,
   getArticleById,

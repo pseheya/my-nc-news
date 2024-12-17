@@ -4,7 +4,7 @@ const api = axios.create({
   baseURL: "https://my-nc-news-backend-project.onrender.com/api",
 });
 
-async function postVotes(votes, article_id) {
+async function patchVotes(votes, article_id) {
   return api
     .patch(`/articles/${article_id}`, { inc_votes: votes })
     .then((response) => {
@@ -13,4 +13,13 @@ async function postVotes(votes, article_id) {
     });
 }
 
-export default { postVotes };
+async function postCommentByArticleId(username, comment, article_id) {
+  const response = await api.post(`/articles/${article_id}/comments`, {
+    username: username,
+    body: comment,
+  });
+
+  return response.data;
+}
+
+export default { patchVotes, postCommentByArticleId };
