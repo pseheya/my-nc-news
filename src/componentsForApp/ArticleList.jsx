@@ -8,7 +8,7 @@ export default function ArticleList() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [articlesPerPage, setArticlesPerPage] = useState(10);
+  const [articlesPerPage, setArticlesPerPage] = useState(9);
   const [hasMoreArticles, setHasMoreArticles] = useState(true);
 
   const fetchArticles = () => {
@@ -45,13 +45,17 @@ export default function ArticleList() {
   }
 
   return (
-    <Flex wrap="wrap" gap={6} justify="center">
-      {articles.map((article) => {
-        return (
-          <ArticleCard article={article} key={article.created_at}></ArticleCard>
-        );
-      })}
-
+    <>
+      <Flex wrap="wrap" gap={6} justify="center">
+        {articles.map((article) => {
+          return (
+            <ArticleCard
+              article={article}
+              key={article.created_at}
+            ></ArticleCard>
+          );
+        })}
+      </Flex>
       <Box display="flex" justifyContent="center" mt="4">
         <Button
           onClick={() => handlePageChange(currentPage - 1)}
@@ -69,6 +73,6 @@ export default function ArticleList() {
           Next
         </Button>
       </Box>
-    </Flex>
+    </>
   );
 }
