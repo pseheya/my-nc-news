@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { Box, Button, Text } from "@chakra-ui/react";
 import LeaveCommentForArticle from "./LeaveCommentForArticle";
+import CommentCard from "./CommentCard";
+import { useCallback } from "react";
 
 export default function CommentsForArticle() {
   const { article_id } = useParams();
@@ -13,6 +15,7 @@ export default function CommentsForArticle() {
   const [currentPage, setCurrentPage] = useState(1);
   const [commentsPerPage, setCommentsPerPage] = useState(10);
   const [hasMoreComments, setHasMoreComments] = useState(true);
+  const [submitted, setSubmited] = useState(null);
 
   function handleClick() {
     setAddClick(!addCLick);
@@ -44,6 +47,12 @@ export default function CommentsForArticle() {
       });
   }, [article_id, currentPage]);
 
+  const removeCommentFromList = useCallback((commentId) => {
+    setComments((prevComments) =>
+      prevComments.filter((comment) => comment.comment_id !== commentId)
+    );
+  }, []);
+
   if (isLoading) {
     return <Text>Loading, please wait...</Text>;
   }
@@ -66,30 +75,30 @@ export default function CommentsForArticle() {
         >
           Add Comment
         </Button>
+        {submitted && (
+          <Text color="green">
+            Your comment has been submitted successfully!
+          </Text>
+        )}
         {addCLick && (
           <LeaveCommentForArticle
             article_id={article_id}
             setAddClick={setAddClick}
             setCurrentPage={setCurrentPage}
+            setSubmited={setSubmited}
           />
         )}
       </Box>
 
       {comments.length > 0 ? (
-        comments.map((comment) => (
-          <Box
-            key={comment.comment_id}
-            p="2"
-            borderBottom="1px solid lightgray"
-          >
-            <Text fontWeight="bold">User: {comment.author}</Text>
-            <Text>{comment.body}</Text>
-            <Text fontSize="sm" color="gray.500">
-              {new Date(comment.created_at).toLocaleString()}
-            </Text>
-            <Text>Votes: {comment.votes}</Text>
-          </Box>
-        ))
+        comments.map((comment) => {
+          return (
+            <CommentCard
+              comment={comment}
+              removeCommentFromList={removeCommentFromList}
+            ></CommentCard>
+          );
+        })
       ) : (
         <Box
           mt="4"
