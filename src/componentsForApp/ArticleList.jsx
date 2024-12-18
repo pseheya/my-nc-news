@@ -49,10 +49,7 @@ export default function ArticleList() {
       <Flex wrap="wrap" gap={6} justify="center">
         {articles.map((article) => {
           return (
-            <ArticleCard
-              article={article}
-              key={article.created_at}
-            ></ArticleCard>
+            <ArticleCard article={article} key={article.title}></ArticleCard>
           );
         })}
       </Flex>

@@ -96,6 +96,7 @@ export default function CommentsForArticle() {
             <CommentCard
               comment={comment}
               removeCommentFromList={removeCommentFromList}
+              key={comment.comment_id}
             ></CommentCard>
           );
         })
