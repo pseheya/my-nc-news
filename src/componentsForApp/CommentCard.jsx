@@ -7,13 +7,16 @@ export default function CommentCard({ comment, removeCommentFromList }) {
   const [error, setError] = useState(null);
 
   function deleteComment() {
+    setIsDeleted(true);
     deleteCommentByCommentId(comment.comment_id)
       .then(() => {
         setIsDeleted(true);
         setError(null);
         removeCommentFromList(comment.comment_id);
       })
+
       .catch(() => {
+        setIsDeleted(false);
         setError("Something went wrong. Please try again.");
       });
   }

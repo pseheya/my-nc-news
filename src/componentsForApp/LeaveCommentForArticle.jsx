@@ -12,7 +12,7 @@ export default function LeaveCommentForArticle({
   setSubmited,
 }) {
   const [message, setMessage] = useState("");
-
+  const [optimistic, setOptimistic] = useState([]);
   const [newComment, setNewComments] = useState({
     username: "",
     body: "",
@@ -43,7 +43,7 @@ export default function LeaveCommentForArticle({
         return newCommentData.comment;
       })
       .then((data) => {
-        setComments((prevComments) => [...prevComments, data]);
+        setComments((prevComments) => [data, ...prevComments]);
       })
       .catch((err) => {
         setMessage(
