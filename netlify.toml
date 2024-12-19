@@ -1,5 +1,4 @@
-
-
-[[edge_functions]]
-function = "hello"
-path = "/test"
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
