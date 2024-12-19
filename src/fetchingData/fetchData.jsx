@@ -4,8 +4,20 @@ const api = axios.create({
   baseURL: "https://my-nc-news-backend-project.onrender.com/api",
 });
 
-async function getAllArticles(page, limit) {
-  const response = await api.get(`/articles?limit=${limit}&p=${page}`);
+async function getAllArticles(page, limit, topic) {
+  let url = new URL(
+    "https://my-nc-news-backend-project.onrender.com/api/articles"
+  );
+  let params = new URLSearchParams(url.search);
+  params.append("limit", limit);
+  params.append("p", page);
+
+  if (topic) {
+    params.append("topic", topic);
+  }
+  url.search = params.toString();
+
+  const response = await api.get(url.toString());
   return response.data;
 }
 
@@ -20,8 +32,15 @@ async function getCommentsByArticleId(id, page, limit) {
   );
   return response.data;
 }
+
+async function getAllUsers() {
+  const response = await api.get(`/users`);
+  return response.data;
+}
+
 export default {
   getAllArticles,
   getArticleById,
   getCommentsByArticleId,
+  getAllUsers,
 };

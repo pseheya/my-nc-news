@@ -54,7 +54,12 @@ export default function LeaveCommentForArticle({
 
   return (
     <Box mt="4" p="4" borderBottom="1px solid lightgray">
-      <Field label="Username" required errorText="This field is required">
+      <Field
+        label="Username"
+        required
+        errorText="This field is required"
+        color="black"
+      >
         <Input
           name="username"
           value={newComment.username}
@@ -63,7 +68,12 @@ export default function LeaveCommentForArticle({
           color="black"
         />
       </Field>
-      <Field label="Comment" required errorText="Field is required">
+      <Field
+        label="Comment"
+        required
+        errorText="Field is required"
+        color="black"
+      >
         <Textarea
           value={newComment.body}
           name="body"

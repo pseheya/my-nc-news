@@ -47,11 +47,11 @@ export default function CommentsForArticle() {
       });
   }, [article_id, currentPage]);
 
-  const removeCommentFromList = useCallback((commentId) => {
+  const removeCommentFromList = (commentId) => {
     setComments((prevComments) =>
       prevComments.filter((comment) => comment.comment_id !== commentId)
     );
-  }, []);
+  };
 
   if (isLoading) {
     return <Text>Loading, please wait...</Text>;
@@ -122,7 +122,9 @@ export default function CommentsForArticle() {
         >
           Previous
         </Button>
-        <Text mx="2">Page {currentPage}</Text>
+        <Text mx="2" color="black">
+          Page {currentPage}
+        </Text>
         <Button
           onClick={() => handlePageChange(currentPage + 1)}
           bg="grey"

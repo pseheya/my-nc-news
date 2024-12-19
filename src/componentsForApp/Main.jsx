@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import ArticleList from "./ArticleList";
 import ReadMore from "./ReadMore";
 import CommentsForArticle from "./CommentsForArticle";
+import LogoPage from "./LogoPage";
+import SignInPage from "./SignInPage";
 
 export default function Main() {
   return (
@@ -12,6 +14,8 @@ export default function Main() {
         path="/articles/:article_id/comments"
         element={<CommentsForArticle />}
       ></Route>
+      <Route path="/" element={<LogoPage />}></Route>
+      <Route path="/sign-in" element={<SignInPage />}></Route>
     </Routes>
   );
 }

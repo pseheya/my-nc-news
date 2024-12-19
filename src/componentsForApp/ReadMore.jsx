@@ -17,7 +17,7 @@ export default function ReadMore() {
   const [hasVoted, setHasVoted] = useState(false);
 
   function handleBack() {
-    navigate("/articles");
+    navigate(-1);
   }
 
   function handleComments() {

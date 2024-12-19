@@ -1,6 +1,5 @@
-import { Button, Card, Image, Text } from "@chakra-ui/react";
+import { Button, Card, Image, Text, Link } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import ReadMore from "./ReadMore";
 import { useState } from "react";
 
@@ -10,6 +9,8 @@ export default function ArticleCard({ article }) {
   const handleToggleDetails = () => {
     navigate(`/articles/${article.article_id}`);
   };
+
+  const url = `/articles/${article.article_id}`;
 
   return (
     <Card.Root
@@ -30,9 +31,21 @@ export default function ArticleCard({ article }) {
       </Card.Body>
 
       <Card.Footer gap="2">
-        <Button onClick={handleToggleDetails} background="gray">
+        <Link
+          href={url}
+          bg="grey"
+          color="white"
+          px={4}
+          py={2}
+          borderRadius="md"
+          textAlign="center"
+          display="inline-block"
+          _hover={{ bg: "darkgrey", textDecoration: "none" }}
+          _focus={{ boxShadow: "outline" }}
+          role="button"
+        >
           Read More
-        </Button>
+        </Link>
       </Card.Footer>
     </Card.Root>
   );
