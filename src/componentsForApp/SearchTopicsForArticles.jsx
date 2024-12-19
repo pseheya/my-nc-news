@@ -16,6 +16,7 @@ export default function SearchTopicsForArticles({
 }) {
   const [topics, setTopisc] = useState([]);
   const [isLoading, setLoadin] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     setLoadin(true);
@@ -26,8 +27,15 @@ export default function SearchTopicsForArticles({
       })
       .then(() => {
         setLoadin(false);
+      })
+      .catch((err) => {
+        setError("This topic does not exist!");
       });
   }, []);
+
+  if (error) {
+    <Text>{error}</Text>;
+  }
 
   if (isLoading) {
     return <p>Loading...</p>;

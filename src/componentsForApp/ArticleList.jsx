@@ -15,6 +15,7 @@ export default function ArticleList() {
   const [isLoading, setLoading] = useState(false);
   const [articlesPerPage, setArticlesPerPage] = useState(9);
   const [hasMoreArticles, setHasMoreArticles] = useState(true);
+  const [error, setError] = useState("");
 
   const topic = searchParams.get("topic");
 
@@ -23,6 +24,7 @@ export default function ArticleList() {
     apiFunctions
       .getAllArticles(currentPage, articlesPerPage, topic)
       .then((data) => {
+        setError("");
         setArticles(data.articles);
         if (!topic) {
           setSelectedItem("");
@@ -32,6 +34,9 @@ export default function ArticleList() {
         } else {
           setHasMoreArticles(true);
         }
+      })
+      .catch((err) => {
+        setError("This article does not exist");
       })
       .finally(() => {
         setLoading(false);
@@ -79,6 +84,10 @@ export default function ArticleList() {
         <Text>Loading ...</Text>
       </Box>
     );
+  }
+
+  if (error) {
+    return <Text>{error}</Text>;
   }
 
   return (
