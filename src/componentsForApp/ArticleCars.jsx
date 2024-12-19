@@ -43,6 +43,7 @@ export default function ArticleCard({ article }) {
           _hover={{ bg: "darkgrey", textDecoration: "none" }}
           _focus={{ boxShadow: "outline" }}
           role="button"
+          onClick={handleToggleDetails}
         >
           Read More
         </Link>
