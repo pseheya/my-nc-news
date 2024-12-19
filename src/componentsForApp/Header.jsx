@@ -33,7 +33,7 @@ export default function Header() {
           </Link>
         </Flex>
       </Box>
-      <Box marginTop="80px" padding="1rem"></Box>
+      <Box marginTop="25px" padding="1rem"></Box>
     </>
   );
 }

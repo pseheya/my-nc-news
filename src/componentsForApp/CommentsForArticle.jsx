@@ -6,6 +6,7 @@ import { Box, Button, Text } from "@chakra-ui/react";
 import LeaveCommentForArticle from "./LeaveCommentForArticle";
 import CommentCard from "./CommentCard";
 import { useCallback } from "react";
+import SearchTopicsForArticles from "./SearchTopicsForArticles";
 
 export default function CommentsForArticle() {
   const { article_id } = useParams();
@@ -58,81 +59,84 @@ export default function CommentsForArticle() {
   }
 
   return (
-    <Box
-      mt="4"
-      p="4"
-      borderWidth="1px"
-      borderRadius="lg"
-      bg="gray.50"
-      minHeight="400px"
-      width="100%"
-    >
-      <Box p="2" borderBottom="1px solid lightgray">
-        <Button
-          onClick={handleClick}
-          bg="grey"
-          borderBottom="1px solid lightgray"
-        >
-          Add Comment
-        </Button>
-        {submitted && (
-          <Text color="green">
-            Your comment has been submitted successfully!
-          </Text>
-        )}
-        {addCLick && (
-          <LeaveCommentForArticle
-            article_id={article_id}
-            setAddClick={setAddClick}
-            setCurrentPage={setCurrentPage}
-            setSubmited={setSubmited}
-          />
-        )}
-      </Box>
-
-      {comments.length > 0 ? (
-        comments.map((comment) => {
-          return (
-            <CommentCard
-              comment={comment}
-              removeCommentFromList={removeCommentFromList}
-              key={comment.comment_id}
-            ></CommentCard>
-          );
-        })
-      ) : (
-        <Box
-          mt="4"
-          p="4"
-          borderWidth="1px"
-          borderRadius="lg"
-          bg="gray.50"
-          minHeight="400px"
-          minWidth="300px"
-        >
-          <Text>No comments available for this article.</Text>
+    <>
+      <SearchTopicsForArticles></SearchTopicsForArticles>
+      <Box
+        mt="4"
+        p="4"
+        borderWidth="1px"
+        borderRadius="lg"
+        bg="gray.50"
+        minHeight="400px"
+        width="100%"
+      >
+        <Box p="2" borderBottom="1px solid lightgray">
+          <Button
+            onClick={handleClick}
+            bg="grey"
+            borderBottom="1px solid lightgray"
+          >
+            Add Comment
+          </Button>
+          {submitted && (
+            <Text color="green">
+              Your comment has been submitted successfully!
+            </Text>
+          )}
+          {addCLick && (
+            <LeaveCommentForArticle
+              article_id={article_id}
+              setAddClick={setAddClick}
+              setCurrentPage={setCurrentPage}
+              setSubmited={setSubmited}
+            />
+          )}
         </Box>
-      )}
 
-      <Box display="flex" justifyContent="center" mt="4">
-        <Button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          bg="grey"
-        >
-          Previous
-        </Button>
-        <Text mx="2" color="black">
-          Page {currentPage}
-        </Text>
-        <Button
-          onClick={() => handlePageChange(currentPage + 1)}
-          bg="grey"
-          disabled={!hasMoreComments}
-        >
-          Next
-        </Button>
+        {comments.length > 0 ? (
+          comments.map((comment) => {
+            return (
+              <CommentCard
+                comment={comment}
+                removeCommentFromList={removeCommentFromList}
+                key={comment.comment_id}
+              ></CommentCard>
+            );
+          })
+        ) : (
+          <Box
+            mt="4"
+            p="4"
+            borderWidth="1px"
+            borderRadius="lg"
+            bg="gray.50"
+            minHeight="400px"
+            minWidth="300px"
+          >
+            <Text>No comments available for this article.</Text>
+          </Box>
+        )}
+
+        <Box display="flex" justifyContent="center" mt="4">
+          <Button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            bg="grey"
+          >
+            Previous
+          </Button>
+          <Text mx="2" color="black">
+            Page {currentPage}
+          </Text>
+          <Button
+            onClick={() => handlePageChange(currentPage + 1)}
+            bg="grey"
+            disabled={!hasMoreComments}
+          >
+            Next
+          </Button>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }

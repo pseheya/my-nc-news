@@ -1,19 +1,22 @@
-import { Box, Flex, Text, Button, Link } from "@chakra-ui/react";
-
+import { Box, Flex, Text, Link } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import ArticleCard from "./ArticleCars";
 import apiFunctions from "../fetchingData/fetchData";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import SearchTopicsForArticles from "./SearchTopicsForArticles";
 
 export default function ArticleList() {
-  let [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
   const currentPage = Number(searchParams.get("p")) || 1;
+  const [selectedItem, setSelectedItem] = useState("");
   const [articles, setArticles] = useState([]);
   const [isLoading, setLoading] = useState(false);
-  const topic = searchParams.get("topic");
-
   const [articlesPerPage, setArticlesPerPage] = useState(9);
   const [hasMoreArticles, setHasMoreArticles] = useState(true);
+
+  const topic = searchParams.get("topic");
 
   const fetchArticles = () => {
     setLoading(true);
@@ -21,6 +24,9 @@ export default function ArticleList() {
       .getAllArticles(currentPage, articlesPerPage, topic)
       .then((data) => {
         setArticles(data.articles);
+        if (!topic) {
+          setSelectedItem("");
+        }
         if (data.articles.length < articlesPerPage) {
           setHasMoreArticles(false);
         } else {
@@ -34,7 +40,38 @@ export default function ArticleList() {
 
   useEffect(() => {
     fetchArticles();
-  }, [currentPage]);
+  }, [currentPage, topic]);
+
+  const handlePageChange = (newPage) => {
+    if (!topic) {
+      setSelectedItem("");
+      navigate({
+        pathname: "/articles",
+        search: `?p=${newPage}`,
+      });
+    } else {
+      navigate({
+        pathname: "/articles",
+        search: `?p=${newPage}&topic=${topic}`,
+      });
+    }
+  };
+
+  const handleTopicChange = (topic) => {
+    setSelectedItem(topic);
+    if (topic) {
+      navigate({
+        pathname: "/articles",
+        search: `?p=1&topic=${topic}`,
+      });
+    } else {
+      setSelectedItem("");
+      navigate({
+        pathname: "/articles",
+        search: `?p=1`,
+      });
+    }
+  };
 
   if (isLoading) {
     return (
@@ -46,12 +83,15 @@ export default function ArticleList() {
 
   return (
     <>
-      <Box></Box>
+      <Box padding={3}>
+        <SearchTopicsForArticles
+          selectedItem={selectedItem}
+          setSelectedItem={handleTopicChange}
+        />
+      </Box>
       <Flex wrap="wrap" gap={6} justify="center">
         {articles.map((article) => {
-          return (
-            <ArticleCard article={article} key={article.title}></ArticleCard>
-          );
+          return <ArticleCard article={article} key={article.title} />;
         })}
       </Flex>
       <Box display="flex" justifyContent="center" mt="4" gap={1}>
@@ -66,7 +106,7 @@ export default function ArticleList() {
             display="inline-block"
             _hover={{ bg: "darkgrey", textDecoration: "none" }}
             _focus={{ boxShadow: "outline" }}
-            href={`/articles?p=${currentPage - 1}`}
+            onClick={() => handlePageChange(currentPage - 1)}
           >
             Previous
           </Link>
@@ -82,7 +122,7 @@ export default function ArticleList() {
             display="inline-block"
             _hover={{ bg: "darkgrey", textDecoration: "none" }}
             _focus={{ boxShadow: "outline" }}
-            href={`/articles?p=${currentPage + 1}`}
+            onClick={() => handlePageChange(currentPage + 1)}
           >
             Next
           </Link>
