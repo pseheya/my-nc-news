@@ -6,7 +6,6 @@ import { Box, Button, Text } from "@chakra-ui/react";
 import LeaveCommentForArticle from "./LeaveCommentForArticle";
 import CommentCard from "./CommentCard";
 import { useCallback } from "react";
-import SearchTopicsForArticles from "./SearchTopicsForArticles";
 
 export default function CommentsForArticle() {
   const { article_id } = useParams();
@@ -60,7 +59,6 @@ export default function CommentsForArticle() {
 
   return (
     <>
-      <SearchTopicsForArticles></SearchTopicsForArticles>
       <Box
         mt="4"
         p="4"
