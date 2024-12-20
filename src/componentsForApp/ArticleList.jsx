@@ -92,12 +92,18 @@ export default function ArticleList() {
 
   return (
     <>
-      <Box width="50%">
+      <Flex
+        display="flex"
+        justifyContent="flex-start"
+        marginLeft="10%"
+        marginBottom="1%"
+        className="Container for Search Component"
+      >
         <SearchTopicsForArticles
           selectedItem={selectedItem}
           setSelectedItem={handleTopicChange}
         />
-      </Box>
+      </Flex>
       <Flex
         wrap="wrap"
         gap={{ base: 2, md: 2 }}
@@ -107,6 +113,7 @@ export default function ArticleList() {
         mx="auto"
         width="100%"
         height="auto"
+        className="container for list of articles"
       >
         {articles.map((article) => {
           return <ArticleCard article={article} key={article.title} />;
@@ -120,6 +127,7 @@ export default function ArticleList() {
         flexDirection={{ base: "column", sm: "row" }}
         width="100%"
         height="auto"
+        className="Container for next or previous page"
       >
         {currentPage === 1 ? null : (
           <Link

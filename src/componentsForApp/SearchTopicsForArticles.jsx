@@ -57,39 +57,31 @@ export default function SearchTopicsForArticles({
   });
 
   return (
-    <Box
-      padding={3}
-      position="flex"
-      width="100%"
-      flexDirection="row"
-      justifyContent="space-between"
-    >
-      <Flex justify="space-between" align="center">
-        <SelectRoot
-          collection={listTopic}
-          value={[selectedItem]}
-          onValueChange={(e) => {
-            setSelectedItem(e.value);
-            handleChange(e.value);
-          }}
-        >
-          <SelectTrigger>
-            <SelectValueText
-              placeholder={selectedItem ? selectedItem : "Select topic"}
-            />
-          </SelectTrigger>
-          <SelectContent>
-            {topics.map((topic) => (
-              <SelectItem item={topic.slug} key={topic.slug}>
-                {topic.slug}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </SelectRoot>
-        <Button background="grey" onClick={handleClear}>
-          Clear
-        </Button>
-      </Flex>
-    </Box>
+    <Flex className="Search box, choose topic for articles" width="50%">
+      <SelectRoot
+        collection={listTopic}
+        value={[selectedItem]}
+        onValueChange={(e) => {
+          setSelectedItem(e.value);
+          handleChange(e.value);
+        }}
+      >
+        <SelectTrigger>
+          <SelectValueText
+            placeholder={selectedItem ? selectedItem : "Select topic"}
+          />
+        </SelectTrigger>
+        <SelectContent>
+          {topics.map((topic) => (
+            <SelectItem item={topic.slug} key={topic.slug}>
+              {topic.slug}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </SelectRoot>
+      <Button background="grey" onClick={handleClear}>
+        Clear
+      </Button>
+    </Flex>
   );
 }

@@ -55,7 +55,7 @@ export default function Header() {
           </Link>
         </Flex>
       </Box>
-      <Box marginTop="10%" padding="1rem"></Box>
+      <Box marginTop="5rem" padding="1rem"></Box>
     </>
   );
 }
