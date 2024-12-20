@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 import { Button, Card, Image, Text, Flex, Box } from "@chakra-ui/react";
 import apiFunction from "../fetchingData/fetchData";
 import CommentsForArticle from "./CommentsForArticle";
 import apiPostFunction from "../fetchingData/postData";
+import UserContextProvider from "../UserContextProvider";
 
 export default function ReadMore() {
+  const { selectedUser } = useContext(UserContextProvider.UserContext);
   const navigate = useNavigate();
   const { article_id } = useParams();
   const [isLoading, setLoading] = useState(false);
@@ -41,12 +44,20 @@ export default function ReadMore() {
       .finally(() => {
         setLoading(false);
       });
-  }, [article_id]);
+
+    const votedArticles =
+      JSON.parse(localStorage.getItem("votedArticles")) || {};
+    if (votedArticles[selectedUser.username]?.[article_id]) {
+      setHasVoted(true);
+    }
+  }, [article_id, selectedUser.username]);
 
   function handleVote(change) {
     setOptimisticVotes((prevVotes) => {
       return prevVotes + change;
     });
+
+    setLoading(true);
 
     apiPostFunction
       .patchVotes(change, article.article_id)
@@ -57,6 +68,16 @@ export default function ReadMore() {
         setArticle(data.article);
         setOptimisticVotes(data.article.votes);
         setHasVoted(true);
+
+        const votedArticles =
+          JSON.parse(localStorage.getItem("votedArticles")) || {};
+        if (!votedArticles[selectedUser.username]) {
+          votedArticles[selectedUser.username] = {};
+        }
+        votedArticles[selectedUser.username][article_id] = true;
+        localStorage.setItem("votedArticles", JSON.stringify(votedArticles));
+
+        setLoading(false);
       })
       .catch((err) => {
         setError(err);
@@ -97,9 +118,15 @@ export default function ReadMore() {
         <Text>Votes: {optimisticVotes}</Text>
       </Card.Body>
       <Card.Footer gap="2">
-        <Flex mt="3" gap="1" flexWrap="wrap">
+        <Flex
+          mt="3"
+          gap="3"
+          flexWrap="wrap"
+          direction="inline"
+          align="flex-start"
+        >
           {!hasVoted && (
-            <>
+            <Flex direction="inline" gap="3" width="100%">
               <Button
                 background="gray"
                 onClick={() => {
@@ -116,9 +143,15 @@ export default function ReadMore() {
               >
                 Dislike article 💔
               </Button>
-            </>
+            </Flex>
           )}
-
+          {hasVoted && (
+            <Flex direction="inline" gap="3" width="100%">
+              <Text fontSize="md" color="gray.700" fontWeight="bold">
+                You have voted for this article!
+              </Text>
+            </Flex>
+          )}
           <Button variant="ghost" background="gray" onClick={handleBack}>
             Main page
           </Button>

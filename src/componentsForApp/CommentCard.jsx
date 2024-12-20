@@ -1,8 +1,11 @@
 import { Box, Button, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import deleteCommentByCommentId from "../fetchingData/deleteData";
+import { useContext } from "react";
+import UserContextProvider from "../UserContextProvider";
 
 export default function CommentCard({ comment, removeCommentFromList }) {
+  const { selectedUser } = useContext(UserContextProvider.UserContext);
   const [isDeleted, setIsDeleted] = useState(false);
   const [error, setError] = useState(null);
 
@@ -58,9 +61,15 @@ export default function CommentCard({ comment, removeCommentFromList }) {
       </Text>
       <Text>Votes: {comment.votes}</Text>
       {error && <Text color="red.500">{error}</Text>}
-      <Button bg="grey" onClick={deleteComment}>
-        Delete comment
-      </Button>
+      {comment.author === selectedUser.username ? (
+        <Button bg="grey" onClick={deleteComment}>
+          Delete comment
+        </Button>
+      ) : (
+        <Button bg="grey" disabled>
+          Delete comment
+        </Button>
+      )}
     </Box>
   );
 }

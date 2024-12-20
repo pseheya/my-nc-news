@@ -17,7 +17,6 @@ function UserProvider({ children }) {
   }, [selectedUser]);
 
   const value = useMemo(() => {
-    console.log("Selected User Value:", selectedUser);
     return { selectedUser, setSelectedUser };
   }, [selectedUser]);
 

@@ -3,6 +3,8 @@ import { Field } from "../components/ui/field";
 import { useState } from "react";
 import apiFunction from "../fetchingData/fetchData";
 import postFunctions from "../fetchingData/postData";
+import { useContext } from "react";
+import UserContextProvider from "../UserContextProvider";
 
 export default function LeaveCommentForArticle({
   article_id,
@@ -11,10 +13,11 @@ export default function LeaveCommentForArticle({
   setCurrentPage,
   setSubmited,
 }) {
+  const { selectedUser } = useContext(UserContextProvider.UserContext);
   const [message, setMessage] = useState("");
   const [optimistic, setOptimistic] = useState([]);
   const [newComment, setNewComments] = useState({
-    username: "",
+    username: selectedUser.username,
     body: "",
   });
 
@@ -54,20 +57,10 @@ export default function LeaveCommentForArticle({
 
   return (
     <Box mt="4" p="4" borderBottom="1px solid lightgray">
-      <Field
-        label="Username"
-        required
-        errorText="This field is required"
-        color="black"
-      >
-        <Input
-          name="username"
-          value={newComment.username}
-          placeholder="Enter your username"
-          onChange={handleCommentInput}
-          color="black"
-        />
-      </Field>
+      <Text fontSize="lg" marginBottom="2%">
+        {selectedUser.username}
+      </Text>
+
       <Field
         label="Comment"
         required
