@@ -57,11 +57,16 @@ export default function SearchTopicsForArticles({
   });
 
   return (
-    <Box padding={3}>
+    <Box
+      padding={3}
+      position="flex"
+      width="100%"
+      flexDirection="row"
+      justifyContent="space-between"
+    >
       <Flex justify="space-between" align="center">
         <SelectRoot
           collection={listTopic}
-          width="320px"
           value={[selectedItem]}
           onValueChange={(e) => {
             setSelectedItem(e.value);

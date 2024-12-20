@@ -1,125 +1,102 @@
-import { Box, Button, Input, Link } from "@chakra-ui/react";
+import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { Field } from "../components/ui/field";
 import apiFunction from "../fetchingData/fetchData";
-import SignInPage from "./SignInPage";
 
-export default function LogoPage() {
-  const [logoInput, setLogoInput] = useState({
-    username: "",
-    name: "",
-  });
-  const [error, setError] = useState(false);
+import { createListCollection } from "@chakra-ui/react";
+import {
+  SelectContent,
+  SelectItem,
+  SelectRoot,
+  SelectTrigger,
+  SelectValueText,
+} from "../components/ui/select";
+
+export default function LogoPage({ selectedUser, setSelectedUser }) {
   const [users, setAllUsers] = useState([]);
-  const [addedNewUser, setNewUser] = useState(false);
-
-  const handleInputChange = (e) => {
-    setLogoInput({ ...logoInput, [e.target.name]: e.target.value });
-  };
+  const [user, setHandleUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    apiFunction.getAllUsers().then((data) => {
-      setAllUsers(data.users);
-    });
+    setIsLoading(true);
+    apiFunction
+      .getAllUsers()
+      .then((data) => {
+        setAllUsers(data.users);
+      })
+      .then(() => {
+        setIsLoading(false);
+      });
   }, []);
 
-  function logIn() {
-    const existedUser = users.filter((user) => {
-      user.username === addedNewUser.username;
+  if (isLoading) {
+    return <Text>Loading, pleace wait..</Text>;
+  }
+
+  const listOfUsers = createListCollection({
+    items: users.map((user) => ({
+      label: user.name,
+      value: user.username,
+    })),
+  });
+
+  function hanldeSelectedUser(user) {
+    const selectedU = users.filter((u) => {
+      return u.username === user[0];
     });
-    if (!existedUser) {
-      setError(true);
-    } else {
-      setNewUser(true);
-    }
+    setSelectedUser(...selectedU);
   }
 
   return (
     <Box
+      padding={6}
       bg="white"
-      border="1px solid #000"
-      borderRadius="8px"
-      p={6}
-      maxWidth="400px"
+      borderRadius="lg"
+      shadow="lg"
+      width="fit-content"
       mx="auto"
-      boxShadow="0 2px 10px rgba(0, 0, 0, 0.1)"
     >
-      <Box mb={4}>
-        <Field
-          label="Username"
-          required
-          errorText="This field is required"
-          color="black"
+      <Flex justify="center" align="center" direction="row" gap={4}>
+        <SelectRoot
+          collection={listOfUsers}
+          value={[user?.username || ""]}
+          onValueChange={(e) => {
+            setHandleUser(e.value);
+            hanldeSelectedUser(e.value);
+          }}
         >
-          <Input
-            id="username"
-            name="username"
-            value={logoInput.username}
-            placeholder="Enter your username"
-            color="black"
-            border="1px solid black"
-            _focus={{ borderColor: "black" }}
-            onChange={handleInputChange}
-          />
-        </Field>
-      </Box>
-
-      <Box mb={4}>
-        <Field
-          label="Name"
-          required
-          errorText="This field is required"
-          color="black"
-        >
-          <Input
-            id="name"
-            name="name"
-            value={logoInput.name}
-            placeholder="Enter your name"
-            color="black"
-            border="1px solid black"
-            _focus={{ borderColor: "black" }}
-            onChange={handleInputChange}
-          />
-        </Field>
-      </Box>
-
-      <Box display="flex" alignItems="center" justifyContent="space-around">
+          <SelectTrigger>
+            <SelectValueText
+              width="200px"
+              placeholder={user ? user : "Select user"}
+            />
+          </SelectTrigger>
+          <SelectContent
+            bg="black"
+            borderRadius="md"
+            shadow="lg"
+            minWidth="200px"
+          >
+            {users.map((user) => (
+              <SelectItem item={user.username} key={user.username}>
+                {user.username}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </SelectRoot>
         <Link
-          onClick={logIn}
-          bg="grey"
-          color="white"
-          px={6}
-          py={2}
+          width="100%"
+          bg="gray.300"
+          color="black"
+          _hover={{ bg: "gray.400" }}
+          _active={{ bg: "gray.500", transform: "scale(0.95)" }}
+          px={4}
+          height="35px"
           borderRadius="md"
-          textAlign="center"
-          display="inline-block"
-          _hover={{ bg: "darkgrey", textDecoration: "none" }}
-          _focus={{ boxShadow: "outline" }}
-          href="#"
+          href={`/users/${user?.username || ""}`}
         >
           Log in
         </Link>
-        {error && (
-          <Text color="black" mt={2}>
-            You are not registered or wrong information
-          </Text>
-        )}
-        <Link
-          bg="grey"
-          color="white"
-          px={6}
-          py={2}
-          borderRadius="md"
-          textAlign="center"
-          display="inline-block"
-          _hover={{ bg: "darkgrey", textDecoration: "none" }}
-          _focus={{ boxShadow: "outline" }}
-          href="/sign-in"
-        >
-          Sign in
-        </Link>
-      </Box>
+      </Flex>
     </Box>
   );
 }

@@ -92,23 +92,40 @@ export default function ArticleList() {
 
   return (
     <>
-      <Box padding={3}>
+      <Box width="50%">
         <SearchTopicsForArticles
           selectedItem={selectedItem}
           setSelectedItem={handleTopicChange}
         />
       </Box>
-      <Flex wrap="wrap" gap={6} justify="center">
+      <Flex
+        wrap="wrap"
+        gap={{ base: 2, md: 2 }}
+        justify="center"
+        maxWidth="100%"
+        px={{ base: 2, md: 4 }}
+        mx="auto"
+        width="100%"
+        height="auto"
+      >
         {articles.map((article) => {
           return <ArticleCard article={article} key={article.title} />;
         })}
       </Flex>
-      <Box display="flex" justifyContent="center" mt="4" gap={1}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        mt={{ base: 3, md: 4 }}
+        gap={1}
+        flexDirection={{ base: "column", sm: "row" }}
+        width="100%"
+        height="auto"
+      >
         {currentPage === 1 ? null : (
           <Link
             bg="grey"
             color="white"
-            px={6}
+            px={{ base: 4, md: 6 }}
             py={2}
             borderRadius="md"
             textAlign="center"
@@ -124,10 +141,11 @@ export default function ArticleList() {
           <Link
             bg="grey"
             color="white"
-            px={6}
+            px={{ base: 4, md: 6 }}
             py={2}
             borderRadius="md"
             textAlign="center"
+            position="flex"
             display="inline-block"
             _hover={{ bg: "darkgrey", textDecoration: "none" }}
             _focus={{ boxShadow: "outline" }}

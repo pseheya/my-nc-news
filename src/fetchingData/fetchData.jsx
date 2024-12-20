@@ -44,10 +44,17 @@ async function getAllTopics() {
   return response.data;
 }
 
+async function getUserByUsername(name) {
+  const response = await api.get(`/users/${username}`);
+  console.log(response.data);
+  return response.data;
+}
+
 export default {
   getAllArticles,
   getArticleById,
   getCommentsByArticleId,
   getAllUsers,
   getAllTopics,
+  getUserByUsername,
 };

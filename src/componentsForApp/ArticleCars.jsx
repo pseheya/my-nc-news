@@ -19,8 +19,14 @@ export default function ArticleCard({ article }) {
       borderWidth="1px"
       borderRadius="lg"
       flexGrow={1}
+      position="flex"
     >
-      <Image src={article.article_img_url} alt={article.title} />
+      <Image
+        src={article.article_img_url}
+        alt={article.title}
+        width="100%"
+        height="auto"
+      />
       <Card.Body gap="2">
         <Card.Title>{article.title}</Card.Title>
 
