@@ -2,9 +2,11 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import { Avatar } from "../components/ui/avatar";
 import { Link } from "react-router-dom";
 import { IconWithCreateIcon } from "./logo";
-import { useState } from "react";
+import { useContext } from "react";
+import UserContextProvider from "../UserContextProvider";
 
-export default function Header({ selectedUser }) {
+export default function Header() {
+  const { selectedUser } = useContext(UserContextProvider.UserContext);
   return (
     <>
       <Box
@@ -43,7 +45,7 @@ export default function Header({ selectedUser }) {
             </Flex>
           </Link>
 
-          <Link to="/users/:username">
+          <Link to={`${selectedUser.username}`}>
             <Avatar
               bg="white"
               color="grey"
@@ -53,7 +55,7 @@ export default function Header({ selectedUser }) {
           </Link>
         </Flex>
       </Box>
-      <Box marginTop="25px" padding="1rem"></Box>
+      <Box marginTop="10%" padding="1rem"></Box>
     </>
   );
 }

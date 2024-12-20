@@ -1,23 +1,15 @@
-import "./App.css";
 import Main from "./componentsForApp/Main";
 import Header from "./componentsForApp/Header";
 import { useState } from "react";
 
-function App() {
-  const [selectedUser, setSelectedUser] = useState({
-    username: "",
-    name: "",
-    avatar_url: "",
-  });
+import UserContextProvider from "./UserContextProvider";
 
-  if (selectedUser === undefined) {
-    setSelectedUser({ username: "", name: "", avatar_url: "" });
-  }
+function App() {
   return (
-    <>
-      <Header selectedUser={selectedUser} />
-      <Main selectedUser={selectedUser} setSelectedUser={setSelectedUser} />
-    </>
+    <UserContextProvider.UserProvider>
+      <Header />
+      <Main />
+    </UserContextProvider.UserProvider>
   );
 }
 

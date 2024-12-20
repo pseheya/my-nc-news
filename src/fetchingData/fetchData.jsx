@@ -44,7 +44,7 @@ async function getAllTopics() {
   return response.data;
 }
 
-async function getUserByUsername(name) {
+async function getUserByUsername(username) {
   const response = await api.get(`/users/${username}`);
   console.log(response.data);
   return response.data;
