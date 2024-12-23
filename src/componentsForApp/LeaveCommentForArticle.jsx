@@ -57,7 +57,7 @@ export default function LeaveCommentForArticle({
 
   return (
     <Box mt="4" p="4" borderBottom="1px solid lightgray">
-      <Text fontSize="lg" marginBottom="2%">
+      <Text fontSize="lg" marginBottom="2%" color="black">
         {selectedUser.username}
       </Text>
 

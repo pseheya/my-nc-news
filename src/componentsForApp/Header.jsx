@@ -1,12 +1,16 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, Button, Link } from "@chakra-ui/react";
 import { Avatar } from "../components/ui/avatar";
-import { Link } from "react-router-dom";
+
 import { IconWithCreateIcon } from "./logo";
 import { useContext } from "react";
 import UserContextProvider from "../UserContextProvider";
 
 export default function Header() {
-  const { selectedUser } = useContext(UserContextProvider.UserContext);
+  const { selectedUser, setSelectedUser } = useContext(
+    UserContextProvider.UserContext
+  );
+
+  console.log(selectedUser);
   return (
     <>
       <Box
@@ -23,16 +27,10 @@ export default function Header() {
         color="white"
         padding={{ base: "0.5rem", md: "1rem" }}
         boxShadow="md"
-        className="header box"
         maxHeight="18%"
       >
-        <Flex
-          justify="space-between"
-          align="center"
-          flexWrap="wrap"
-          className="logo,profile avatar"
-        >
-          <Link to="/articles">
+        <Flex justify="space-between" align="center" flexWrap="wrap">
+          <Link href="/articles" gap={2}>
             <Flex align="center" gap="2">
               <IconWithCreateIcon />
               <Text
@@ -45,14 +43,69 @@ export default function Header() {
             </Flex>
           </Link>
 
-          <Link to={`${selectedUser.username}`}>
-            <Avatar
-              bg="white"
-              color="grey"
-              boxSize={{ base: "40px", md: "50px" }}
-              src={selectedUser.avatar_url}
-            />
-          </Link>
+          <Flex align="center" gap="4" ml="auto">
+            <Link
+              href="/articles"
+              bg="grey"
+              color="white"
+              px={4}
+              py={2}
+              borderRadius="md"
+              textAlign="center"
+              display="inline-block"
+              _hover={{ bg: "darkgrey", textDecoration: "none" }}
+              _focus={{ boxShadow: "outline" }}
+              role="button"
+              gap={2}
+            >
+              Read Articles
+            </Link>
+            {selectedUser.username ? (
+              <Link
+                bg="grey"
+                onClick={() => {
+                  setSelectedUser({ username: "", name: "", avatar_url: "" });
+                }}
+                href="/"
+                color="white"
+                px={4}
+                py={2}
+                borderRadius="md"
+                textAlign="center"
+                display="inline-block"
+                _hover={{ bg: "darkgrey", textDecoration: "none" }}
+                _focus={{ boxShadow: "outline" }}
+                role="button"
+              >
+                Log out
+              </Link>
+            ) : (
+              <Link
+                href="/"
+                bg="grey"
+                color="white"
+                px={4}
+                py={2}
+                borderRadius="md"
+                textAlign="center"
+                display="inline-block"
+                _hover={{ bg: "darkgrey", textDecoration: "none" }}
+                _focus={{ boxShadow: "outline" }}
+                role="button"
+              >
+                Log in
+              </Link>
+            )}
+
+            <Link href={`${selectedUser.username}`}>
+              <Avatar
+                bg="white"
+                color="grey"
+                boxSize={{ base: "40px", md: "50px" }}
+                src={selectedUser.avatar_url}
+              />
+            </Link>
+          </Flex>
         </Flex>
       </Box>
       <Box marginTop="5rem" padding="1rem"></Box>

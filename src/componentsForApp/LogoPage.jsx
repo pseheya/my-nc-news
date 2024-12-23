@@ -51,8 +51,6 @@ export default function LogoPage() {
     setSelectedUser(selectedU);
   }
 
-  console.log(user);
-
   return (
     <Flex
       justify="center"
@@ -71,7 +69,10 @@ export default function LogoPage() {
         }}
       >
         <SelectTrigger>
-          <SelectValueText placeholder={user ? user : "Select user"} />
+          <SelectValueText
+            placeholder={user ? user : "Select user"}
+            color="black"
+          />
         </SelectTrigger>
         <SelectContent bg="black" borderRadius="md" shadow="lg">
           {users.map((user) => (

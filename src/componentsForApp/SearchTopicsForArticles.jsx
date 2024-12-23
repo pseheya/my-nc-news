@@ -57,7 +57,7 @@ export default function SearchTopicsForArticles({
   });
 
   return (
-    <Flex className="Search box, choose topic for articles" width="50%">
+    <Flex className="Search box, choose topic for articles" width="50%" gap={2}>
       <SelectRoot
         collection={listTopic}
         value={[selectedItem]}
@@ -68,7 +68,9 @@ export default function SearchTopicsForArticles({
       >
         <SelectTrigger>
           <SelectValueText
+            color="black"
             placeholder={selectedItem ? selectedItem : "Select topic"}
+            gap={2}
           />
         </SelectTrigger>
         <SelectContent>

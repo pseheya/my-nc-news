@@ -5,7 +5,9 @@ import UserContextProvider from "../UserContextProvider";
 import { Badge, Box, Card, HStack, Image } from "@chakra-ui/react";
 
 export default function UserInfo() {
-  const { selectedUser } = useContext(UserContextProvider.UserContext);
+  const { selectedUser, setSelectedUser } = useContext(
+    UserContextProvider.UserContext
+  );
   const { username } = useParams();
 
   return (
@@ -18,15 +20,8 @@ export default function UserInfo() {
       />
       <Box>
         <Card.Body>
-          <Card.Title mb="2">The perfect latte</Card.Title>
-          <Card.Description>
-            Caffè latte is a coffee beverage of Italian origin made with
-            espresso and steamed milk.
-          </Card.Description>
-          <HStack mt="4">
-            <Badge>Hot</Badge>
-            <Badge>Caffeine</Badge>
-          </HStack>
+          <Card.Title mb="2">{selectedUser.name}</Card.Title>
+          <Card.Description>Username: {selectedUser.username}</Card.Description>
         </Card.Body>
         <Card.Footer>
           <Link
@@ -43,6 +38,24 @@ export default function UserInfo() {
             role="button"
           >
             Read articles
+          </Link>
+          <Link
+            bg="grey"
+            onClick={() => {
+              setSelectedUser({ username: "", name: "", avatar_url: "" });
+            }}
+            href="/"
+            color="white"
+            px={4}
+            py={2}
+            borderRadius="md"
+            textAlign="center"
+            display="inline-block"
+            _hover={{ bg: "darkgrey", textDecoration: "none" }}
+            _focus={{ boxShadow: "outline" }}
+            role="button"
+          >
+            Log out
           </Link>
         </Card.Footer>
       </Box>

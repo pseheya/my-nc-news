@@ -13,6 +13,8 @@ function UserProvider({ children }) {
   useEffect(() => {
     if (selectedUser.username) {
       localStorage.setItem("selectedUser", JSON.stringify(selectedUser));
+    } else {
+      localStorage.removeItem("selectedUser");
     }
   }, [selectedUser]);
 
