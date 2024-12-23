@@ -104,62 +104,121 @@ export default function ReadMore() {
   }
 
   return (
-    <Card.Root maxW="xl" overflow="hidden">
-      <Image src={article.article_img_url} alt={article.title} />
-      <Card.Body gap="2">
-        <Card.Title>{article.title}</Card.Title>
-        <Card.Description>{article.body}</Card.Description>
-        <Text textStyle="2l" fontWeight="medium" letterSpacing="tight" mt="2">
+    <Card.Root
+      maxW={{ base: "100%", md: "xl" }}
+      overflow="hidden"
+      boxShadow="md"
+      borderRadius="md"
+      margin="auto"
+      padding={{ base: "1rem", md: "1.5rem" }}
+    >
+      <Image
+        src={article.article_img_url}
+        alt={article.title}
+        objectFit="cover"
+        width="100%"
+        height={{ base: "200px", md: "300px" }}
+        borderRadius="md"
+      />
+      <Card.Body gap="2" mt="2">
+        <Card.Title fontSize={{ base: "lg", md: "xl" }}>
+          {article.title}
+        </Card.Title>
+        <Card.Description
+          fontSize={{ base: "sm", md: "md" }}
+          textOverflow="ellipsis"
+          noOfLines={{ base: 3, md: 5 }}
+        >
+          {article.body}
+        </Card.Description>
+        <Text
+          textStyle="2l"
+          fontWeight="medium"
+          letterSpacing="tight"
+          mt="2"
+          fontSize={{ base: "sm", md: "md" }}
+        >
           Author: {article.author}
         </Text>
-        <Text>Topic: {article.topic}</Text>
-        <Text>Posted: {new Date(article.created_at).toLocaleString()}</Text>
-        <Text>Comments: {article.comment_count}</Text>
-        <Text>Votes: {optimisticVotes}</Text>
+        <Text fontSize={{ base: "sm", md: "md" }}>Topic: {article.topic}</Text>
+        <Text fontSize={{ base: "sm", md: "md" }}>
+          Posted: {new Date(article.created_at).toLocaleString()}
+        </Text>
+        <Text fontSize={{ base: "sm", md: "md" }}>
+          Comments: {article.comment_count}
+        </Text>
+        <Text fontSize={{ base: "sm", md: "md" }}>
+          Votes: {optimisticVotes}
+        </Text>
       </Card.Body>
-      <Card.Footer gap="2">
+      <Card.Footer gap="2" mt="3">
         <Flex
-          mt="3"
           gap="3"
           flexWrap="wrap"
-          direction="inline"
+          direction={{ base: "column", md: "row" }}
           align="flex-start"
         >
-          {!hasVoted && (
-            <Flex direction="inline" gap="3" width="100%">
-              <Button
-                background="gray"
-                onClick={() => {
-                  handleVote(1);
-                }}
-              >
-                Like article ❤️
-              </Button>
-              <Button
-                background="gray"
-                onClick={() => {
-                  handleVote(-1);
-                }}
-              >
-                Dislike article 💔
-              </Button>
-            </Flex>
+          {selectedUser.username && (
+            <>
+              {!hasVoted && (
+                <Flex
+                  gap="3"
+                  width="100%"
+                  flexDirection={{ base: "column", md: "row" }}
+                >
+                  <Button
+                    background="gray"
+                    width={{ base: "100%", md: "auto" }}
+                    onClick={() => {
+                      handleVote(1);
+                    }}
+                  >
+                    Like article ❤️
+                  </Button>
+                  <Button
+                    background="gray"
+                    width={{ base: "100%", md: "auto" }}
+                    onClick={() => {
+                      handleVote(-1);
+                    }}
+                  >
+                    Dislike article 💔
+                  </Button>
+                </Flex>
+              )}
+              {hasVoted && (
+                <Flex gap="3" width="100%">
+                  <Text fontSize="md" color="gray.700" fontWeight="bold">
+                    You have voted for this article!
+                  </Text>
+                </Flex>
+              )}
+            </>
           )}
-          {hasVoted && (
-            <Flex direction="inline" gap="3" width="100%">
-              <Text fontSize="md" color="gray.700" fontWeight="bold">
-                You have voted for this article!
-              </Text>
-            </Flex>
-          )}
-          <Button variant="ghost" background="gray" onClick={handleBack}>
+
+          <Button
+            variant="ghost"
+            background="gray"
+            width={{ base: "100%", md: "auto" }}
+            onClick={handleBack}
+          >
             Main page
           </Button>
-
-          <Button variant="ghost" background="gray" onClick={handleComments}>
-            {showComments ? "Hide comments" : "Comments"}
-          </Button>
-          {showComments && <CommentsForArticle />}
+          {selectedUser.username ? (
+            <>
+              <Button
+                variant="ghost"
+                background="gray"
+                width={{ base: "100%", md: "auto" }}
+                onClick={handleComments}
+              >
+                {showComments ? "Hide comments" : "Comments"}
+              </Button>
+              {showComments && <CommentsForArticle />}{" "}
+            </>
+          ) : (
+            <Text>Log in to leave comment and vote for article.</Text>
+          )}
         </Flex>
       </Card.Footer>
     </Card.Root>

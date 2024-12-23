@@ -3,6 +3,7 @@ import ArticleList from "./ArticleList";
 import ReadMore from "./ReadMore";
 import LogoPage from "./LogoPage";
 import UserInfo from "./UserInfo";
+import Error from "./Error";
 
 export default function Main() {
   return (
@@ -10,7 +11,7 @@ export default function Main() {
       <Route path="/articles" element={<ArticleList />} />
       <Route path="/articles/:article_id" element={<ReadMore />} />
       <Route path="/" element={<LogoPage />} />
-      <Route path="/:username" element={<UserInfo />} />
+      <Route path="/user/:username" element={<UserInfo />} />
       <Route path="*" element={<Error />} />
     </Routes>
   );

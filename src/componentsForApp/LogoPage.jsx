@@ -90,7 +90,7 @@ export default function LogoPage() {
         px={4}
         borderRadius="md"
         onClick={() => {
-          navigation(`/${user}`);
+          navigation(`/user/${user}`);
         }}
       >
         Log in

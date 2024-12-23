@@ -10,7 +10,6 @@ export default function Header() {
     UserContextProvider.UserContext
   );
 
-  console.log(selectedUser);
   return (
     <>
       <Box
@@ -27,7 +26,6 @@ export default function Header() {
         color="white"
         padding={{ base: "0.5rem", md: "1rem" }}
         boxShadow="md"
-        maxHeight="18%"
       >
         <Flex justify="space-between" align="center" flexWrap="wrap">
           <Link href="/articles" gap={2}>
@@ -52,7 +50,7 @@ export default function Header() {
               py={2}
               borderRadius="md"
               textAlign="center"
-              display="inline-block"
+              display={{ base: "none", md: "inline-block" }}
               _hover={{ bg: "darkgrey", textDecoration: "none" }}
               _focus={{ boxShadow: "outline" }}
               role="button"
@@ -60,6 +58,7 @@ export default function Header() {
             >
               Read Articles
             </Link>
+
             {selectedUser.username ? (
               <Link
                 bg="grey"
@@ -96,8 +95,12 @@ export default function Header() {
                 Log in
               </Link>
             )}
-
-            <Link href={`${selectedUser.username}`}>
+            {selectedUser ? (
+              <Link href={`${selectedUser.username}`}></Link>
+            ) : (
+              <Link href="/"></Link>
+            )}
+            <Link href={`/user/${selectedUser.username}`}>
               <Avatar
                 bg="white"
                 color="grey"

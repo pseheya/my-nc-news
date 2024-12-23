@@ -11,19 +11,34 @@ export default function UserInfo() {
   const { username } = useParams();
 
   return (
-    <Card.Root flexDirection="row" overflow="hidden" maxW="xl">
+    <Card.Root
+      flexDirection={{ base: "column", md: "row" }}
+      overflow="hidden"
+      maxW="xl"
+      width="100%"
+    >
       <Image
         objectFit="cover"
-        maxW="200px"
+        maxW={{ base: "100%", md: "200px" }}
+        width="100%"
         src={selectedUser.avatar_url}
         alt="Caffe Latte"
       />
-      <Box>
+      <Box flex="1" p={{ base: 4, md: 6 }}>
         <Card.Body>
-          <Card.Title mb="2">{selectedUser.name}</Card.Title>
-          <Card.Description>Username: {selectedUser.username}</Card.Description>
+          <Card.Title mb="2" fontSize={{ base: "lg", md: "xl" }}>
+            {selectedUser.name}
+          </Card.Title>
+          <Card.Description fontSize={{ base: "sm", md: "md" }}>
+            Username: {selectedUser.username}
+          </Card.Description>
         </Card.Body>
-        <Card.Footer>
+        <Card.Footer
+          mt="4"
+          display="flex"
+          flexDirection={{ base: "column", md: "row" }}
+          gap="2"
+        >
           <Link
             href="/articles"
             bg="grey"
@@ -36,6 +51,7 @@ export default function UserInfo() {
             _hover={{ bg: "darkgrey", textDecoration: "none" }}
             _focus={{ boxShadow: "outline" }}
             role="button"
+            width={{ base: "100%", md: "auto" }}
           >
             Read articles
           </Link>
@@ -54,6 +70,7 @@ export default function UserInfo() {
             _hover={{ bg: "darkgrey", textDecoration: "none" }}
             _focus={{ boxShadow: "outline" }}
             role="button"
+            width={{ base: "100%", md: "auto" }}
           >
             Log out
           </Link>
