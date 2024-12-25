@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Heading,
-  Text,
-  Center,
-  Icon,
-  Link,
-} from "@chakra-ui/react";
+import { Box, Heading, Text, Center, Link } from "@chakra-ui/react";
 
 export default function Error() {
   return (

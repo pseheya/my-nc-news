@@ -1,5 +1,4 @@
 import { createIcon } from "@chakra-ui/react";
-import { Text } from "@chakra-ui/react";
 
 const HeartIcon = createIcon({
   displayName: "HeartIcon",

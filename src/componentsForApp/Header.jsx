@@ -95,19 +95,25 @@ export default function Header() {
                 Log in
               </Link>
             )}
-            {selectedUser ? (
-              <Link href={`${selectedUser.username}`}></Link>
+
+            {selectedUser.username ? (
+              <Link href={`/user/${selectedUser.username}`}>
+                <Avatar
+                  bg="white"
+                  color="grey"
+                  boxSize={{ base: "40px", md: "50px" }}
+                  src={selectedUser.avatar_url}
+                />
+              </Link>
             ) : (
-              <Link href="/"></Link>
+              <Link href="/">
+                <Avatar
+                  bg="white"
+                  color="grey"
+                  boxSize={{ base: "40px", md: "50px" }}
+                />
+              </Link>
             )}
-            <Link href={`/user/${selectedUser.username}`}>
-              <Avatar
-                bg="white"
-                color="grey"
-                boxSize={{ base: "40px", md: "50px" }}
-                src={selectedUser.avatar_url}
-              />
-            </Link>
           </Flex>
         </Flex>
       </Box>

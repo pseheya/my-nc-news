@@ -1,7 +1,6 @@
 import { Box, Text, Input, Button, Textarea } from "@chakra-ui/react";
 import { Field } from "../components/ui/field";
 import { useState } from "react";
-import apiFunction from "../fetchingData/fetchData";
 import postFunctions from "../fetchingData/postData";
 import { useContext } from "react";
 import UserContextProvider from "../UserContextProvider";

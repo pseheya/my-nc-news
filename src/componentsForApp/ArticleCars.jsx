@@ -1,7 +1,5 @@
-import { Button, Card, Image, Text, Link } from "@chakra-ui/react";
+import { Card, Image, Text, Link } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import ReadMore from "./ReadMore";
-import { useState } from "react";
 
 export default function ArticleCard({ article }) {
   const navigate = useNavigate();

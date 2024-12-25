@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Box, Button, Text } from "@chakra-ui/react";
 import LeaveCommentForArticle from "./LeaveCommentForArticle";
 import CommentCard from "./CommentCard";
-import { useCallback } from "react";
 
 export default function CommentsForArticle() {
   const { article_id } = useParams();

@@ -2,7 +2,6 @@ import { Button, createListCollection, Box, Flex } from "@chakra-ui/react";
 import {
   SelectContent,
   SelectItem,
-  SelectLabel,
   SelectRoot,
   SelectTrigger,
   SelectValueText,

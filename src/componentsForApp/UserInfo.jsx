@@ -1,8 +1,7 @@
-import { Text, Button, Link } from "@chakra-ui/react";
-import { useState, useContext } from "react";
+import { Link, Box, Card, Image } from "@chakra-ui/react";
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import UserContextProvider from "../UserContextProvider";
-import { Badge, Box, Card, HStack, Image } from "@chakra-ui/react";
 
 export default function UserInfo() {
   const { selectedUser, setSelectedUser } = useContext(
@@ -22,7 +21,7 @@ export default function UserInfo() {
         maxW={{ base: "100%", md: "200px" }}
         width="100%"
         src={selectedUser.avatar_url}
-        alt="Caffe Latte"
+        alt={`User avatar for ${selectedUser.username}`}
       />
       <Box flex="1" p={{ base: 4, md: 6 }}>
         <Card.Body>
