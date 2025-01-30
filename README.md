@@ -1,88 +1,87 @@
-My News Application
+# My NC News Application
 
-Deployed Version: https://pseheyamyncnews.netlify.app/articles
+[Deployed Version](https://pseheyamyncnews.netlify.app/articles)
 
--General Info
+---
 
-This project is a news application that allows users to browse, read, and engage with various articles across multiple categories. Users can:
+## General Info
 
--View a list of articles.
+**My News Application** is a feature-rich news platform where users can browse, read, and engage with various articles across multiple categories. This application enables users to:
 
--Read detailed content for individual articles.
+- View a list of articles.
+- Read detailed content for individual articles.
+- Interact with articles through features like comments and votes (if applicable).
 
--Interact with the articles through features like comments and votes (if applicable).
+The app is designed to provide a seamless, engaging user experience with intuitive navigation and a clean, modern interface.
 
-The app is designed to provide a seamless and engaging user experience with intuitive navigation and a clean interface.
+---
 
--Back End Repository
+## Backend Repository
 
-The back end for this project is hosted in a separate repository. You can find it here:
-Back End Repo: https://github.com/pseheya/my-nc-news-backend-project
+The backend for this project is hosted in a separate repository. You can find it here:
 
-Node Version Requirement
+- [Back End Repo](https://github.com/pseheya/my-nc-news-backend-project)
 
-To run this project locally, ensure you have Node.js version 16.x or higher installed. You can verify your Node.js version by running:
+---
 
+## Node Version Requirement
+
+To run this project locally, ensure that you have Node.js version 16.x or higher installed. You can verify your Node.js version by running:
+
+```bash
 node --version
 
 How to Run This Project Locally
 
 Follow these steps to set up and run the project locally:
 
-Clone the Repository
+    Clone the Repository:
 
-Repo: https://github.com/pseheya/my-nc-news
+git clone https://github.com/pseheya/my-nc-news.git
 
-git clone <repo-url>
+Navigate to the Project Directory:
 
-Navigate to the Project Directory
+cd my-nc-news
 
-cd <project-directory>
-
-Install Dependencies
+Install Dependencies:
 
 npm install
 
-Run the Development Server
+Run the Development Server:
 
-npm run dev
+    npm run dev
 
 The application should now be running locally.
+Build for Production
 
--Build for Production
-To create a production build of the application:
+To create a production build of the application, run:
 
 npm run build
 
--Preview the Production Build
+Preview the Production Build
+
 You can preview the production build locally using:
 
 npm run preview
 
--Dependencies
+Dependencies
 
 The project relies on the following key dependencies:
 
-@chakra-ui/react: UI components library.
-
-axios: For making HTTP requests.
-
-react-router-dom: For client-side routing.
-
-react-hook-form: For managing form state and validation.
-
-framer-motion: For animations.
+    @chakra-ui/react: A UI components library for building accessible and responsive interfaces.
+    axios: A promise-based HTTP client for making requests to the backend API.
+    react-router-dom: For client-side routing in the React app.
+    react-hook-form: A library for managing form state and validation.
+    framer-motion: For smooth animations and transitions.
 
 DevDependencies
 
 The development environment includes:
 
-vite: Fast and lightweight development server.
-
-eslint: For linting and code quality.
-
-@vitejs/plugin-react: To integrate React with Vite.
+    vite: A fast and lightweight development server.
+    eslint: A tool for linting and enforcing code quality standards.
+    @vitejs/plugin-react: To integrate React with Vite for faster development builds.
 
 Credits
 
-This portfolio project was created as part of a Digital Skills Bootcamp in Software Engineering provided by [Northcoders](https://northcoders.com/)
+This portfolio project was created as part of a Digital Skills Bootcamp in Software Engineering provided by Northcoders.
